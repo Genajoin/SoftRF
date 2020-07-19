@@ -36,7 +36,6 @@ Adafruit_BMP280::Adafruit_BMP280(int8_t cspin, int8_t mosipin, int8_t misopin, i
   : _cs(cspin), _mosi(mosipin), _miso(misopin), _sck(sckpin)
 { }
 
-
 bool Adafruit_BMP280::begin(uint8_t a, uint8_t chipid) {
   _i2caddr = a;
 
@@ -62,7 +61,9 @@ bool Adafruit_BMP280::begin(uint8_t a, uint8_t chipid) {
     return false;
 
   readCoefficients();
-  write8(BMP280_REGISTER_CONTROL, 0x3F);
+  //write8(BMP280_REGISTER_CONTROL, 0x3F);
+  write8(BMP280_REGISTER_CONTROL, 0x33); 
+  write8(BMP280_REGISTER_CONFIG, 0x14);
   return true;
 }
 

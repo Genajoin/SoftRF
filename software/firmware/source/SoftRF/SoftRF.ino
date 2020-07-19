@@ -78,6 +78,7 @@
 #include "BaroHelper.h"
 #include "TTNHelper.h"
 #include "TrafficHelper.h"
+#include "LK8EX1Helper.h"
 
 #if defined(ENABLE_AHRS)
 #include "AHRSHelper.h"
@@ -382,6 +383,7 @@ void normal()
     if (isValidFix()) {
       GDL90_Export();
       D1090_Export();
+      LK8EX1_Export();
     }
     ExportTimeMarker = millis();
   }
@@ -583,6 +585,7 @@ void txrx_test()
     NMEA_Export();
     GDL90_Export();
     D1090_Export();
+    LK8EX1_Export();
     ExportTimeMarker = millis();
   }
 #if DEBUG_TIMING

@@ -1,6 +1,6 @@
 /*
- * BaroHelper.h
- * Copyright (C) 2018-2020 Linar Yusupov
+ * LK8EX1Helper.h
+ * Copyright (C) 2019 Evgeny Istomin
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,33 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BAROHELPER_H
-#define BAROHELPER_H
+#ifndef LK8EX1HELPER_H
+#define LK8EX1HELPER_H
 
-#define BMP280_ADDRESS_ALT  0x76 /* GY-91, SA0 is NC */
-
+#include "SoftRF.h"
+#define LK8EX1_BUFFER_SIZE    128
 enum
 {
-  BARO_MODULE_NONE,
-  BARO_MODULE_BMP180,
-  BARO_MODULE_BMP280,
-  BARO_MODULE_MPL3115A2
+	LK8EX1_OFF,
+	LK8EX1_UART,
+	LK8EX1_UDP,
+	LK8EX1_TCP,
+	LK8EX1_BLUETOOTH
 };
 
-typedef struct barochip_ops_struct {
-  byte type;
-  const char name[10];
-  bool (*probe)();
-  void (*setup)();
-  float (*altitude)(float);
-  float (*temperature)();
-  float (*pressure)();
-} barochip_ops_t;
+void LK8EX1_Export(void);
 
-extern barochip_ops_t *baro_chip;
-
-bool Baro_probe(void);
-byte Baro_setup(void);
-void Baro_loop(void);
-
-#endif /* BAROHELPER_H */
+#endif /* LK8EX1HELPER_H */

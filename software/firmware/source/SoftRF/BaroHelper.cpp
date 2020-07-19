@@ -101,13 +101,23 @@ static float bmp180_altitude(float sealevelPressure)
 {
   return bmp180.readAltitude(sealevelPressure * 100);
 }
+static float bmp180_temperature()
+{
+  return bmp180.readTemperature();
+}
+static float bmp180_pressure()
+{
+  return (float)bmp180.readPressure();
+}
 
 barochip_ops_t bmp180_ops = {
   BARO_MODULE_BMP180,
   "BMP180",
   bmp180_probe,
   bmp180_setup,
-  bmp180_altitude
+  bmp180_altitude,
+  bmp180_temperature,
+  bmp180_pressure
 };
 #endif /* EXCLUDE_BMP180 */
 
@@ -144,13 +154,23 @@ static float bmp280_altitude(float sealevelPressure)
 {
     return bmp280.readAltitude(sealevelPressure);
 }
+static float bmp280_temperature()
+{
+    return bmp280.readTemperature();
+}
+static float bmp280_pressure()
+{
+    return bmp280.readPressure();
+}
 
 barochip_ops_t bmp280_ops = {
   BARO_MODULE_BMP280,
   "BMP280",
   bmp280_probe,
   bmp280_setup,
-  bmp280_altitude
+  bmp280_altitude,
+  bmp280_temperature,
+  bmp280_pressure
 };
 #endif /* EXCLUDE_BMP280 */
 
@@ -243,6 +263,8 @@ byte Baro_setup()
 void Baro_loop()
 {
   if (baro_chip && isTimeToBaro()) {
+    ThisAircraft.temperature = baro_chip->temperature();
+    ThisAircraft.pressure = baro_chip->pressure();
 
     /* Draft of pressure altitude and vertical speed calculation */
     ThisAircraft.pressure_altitude = baro_chip->altitude(1013.25);
